@@ -1,0 +1,5 @@
+
+Warning: PHP Startup: Unable to load dynamic library 'gd2' (tried: E:\xampp\php\ext\gd2 (The specified module could not be found), E:\xampp\php\ext\php_gd2.dll (The specified module could not be found)) in Unknown on line 0
+
+   ERROR  Command "'driver'" is not defined.  
+
