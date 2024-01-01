@@ -10,7 +10,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'slug', 'status',
+        'name', 'slug', 'status','image',
     ];
 
     public static $rules = [

@@ -42,6 +42,7 @@ class SubCategoryController extends Controller
                 'slug' => 'required|unique:sub_categories',
                 'category' => 'required',
                 'status' => 'required',
+                'show_home' => 'required',
             ]);
 
         if ($validator->passes()) {
@@ -50,6 +51,7 @@ class SubCategoryController extends Controller
             $subCategory->name = $request->name;
             $subCategory->slug = $request->slug;
             $subCategory->status = $request->status;
+            $subCategory->show_home = $request->show_home;
             $subCategory->category_id = $request->category;
 
             $subCategory->save();
@@ -114,6 +116,7 @@ class SubCategoryController extends Controller
                 'slug' => 'required|unique:sub_categories,slug,'.$subCategory->id.',id',
                 'category' => 'required',
                 'status' => 'required',
+                'show_home' => 'required',
             ]);
 
         if ($validator->passes()) {
@@ -121,6 +124,7 @@ class SubCategoryController extends Controller
             $subCategory->name = $request->name;
             $subCategory->slug = $request->slug;
             $subCategory->status = $request->status;
+            $subCategory->show_home = $request->show_home;
             $subCategory->category_id = $request->category;
 
             $subCategory->save();
