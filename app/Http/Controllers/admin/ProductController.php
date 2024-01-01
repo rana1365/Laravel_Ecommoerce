@@ -214,7 +214,7 @@ class ProductController extends Controller
             $products->save();
 
 
-//            $request->session()->flash('success', 'Product Updated Successfully.!');
+            $request->session()->flash('success', 'Product Updated Successfully.!');
 
             return response(
                 [

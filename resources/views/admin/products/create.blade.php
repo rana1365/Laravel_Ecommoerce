@@ -62,7 +62,6 @@
                             </div>
                         </div>
                         <div class="row" id="product-gallery">
-
                         </div>
                         <div class="card mb-3">
                             <div class="card-body">
@@ -319,7 +318,7 @@
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }, success: function(file, response){
                     //$("#image_id").val(response.image_id);
-                    //console.log(response)
+                    console.log(response)
 
                 let html_img_thumb = `<div class="col-md-3" id="image-row-${response.image_id}">
                     <div class="card">

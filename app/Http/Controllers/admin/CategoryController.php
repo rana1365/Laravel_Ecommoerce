@@ -39,6 +39,7 @@ class CategoryController extends Controller
             [
                 'name' => 'required',
                 'slug' => 'required|unique:categories',
+                'showHome' => 'required',
             ]);
 
         if ($validator->passes())
@@ -125,6 +126,7 @@ class CategoryController extends Controller
             [
                 'name' => 'required',
                 'slug' => 'required|unique:categories,slug,'.$category->id.',id',
+                'showHome' => 'required',
             ]);
 
         if ($validator->passes()) {
