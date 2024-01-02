@@ -87,59 +87,23 @@
                           <a class="nav-link active" aria-current="page" href="index.php" title="Products">Home</a>
                     </li> -->
 
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Electronics
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item nav-link" href="#">Mobile</a></li>
-                            <li><a class="dropdown-item nav-link" href="#">Tablets</a></li>
-                            <li><a class="dropdown-item nav-link" href="#">Laptops</a></li>
-                            <li><a class="dropdown-item nav-link" href="#">Speakers</a></li>
-                            <li><a class="dropdown-item nav-link" href="#">Watches</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Men's Fashion
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">Shirts</a></li>
-                            <li><a class="dropdown-item" href="#">Jeans</a></li>
-                            <li><a class="dropdown-item" href="#">Shoes</a></li>
-                            <li><a class="dropdown-item" href="#">Watches</a></li>
-                            <li><a class="dropdown-item" href="#">Perfumes</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Women's Fashion
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">T-Shirts</a></li>
-                            <li><a class="dropdown-item" href="#">Tops</a></li>
-                            <li><a class="dropdown-item" href="#">Jeans</a></li>
-                            <li><a class="dropdown-item" href="#">Shoes</a></li>
-                            <li><a class="dropdown-item" href="#">Watches</a></li>
-                            <li><a class="dropdown-item" href="#">Perfumes</a></li>
-                        </ul>
-                    </li>
+                    @if( getCategories()->isNotEmpty() )
+                        @foreach( getCategories() as $category )
 
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            Appliances
+                            {{ $category->name }}
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">TV</a></li>
-                            <li><a class="dropdown-item" href="#">Washing Machines</a></li>
-                            <li><a class="dropdown-item" href="#">Air Conditioners</a></li>
-                            <li><a class="dropdown-item" href="#">Vacuum Cleaner</a></li>
-                            <li><a class="dropdown-item" href="#">Fans</a></li>
-                            <li><a class="dropdown-item" href="#">Air Coolers</a></li>
-                        </ul>
+                        @if($category->sub_category->isNotEmpty())
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                @foreach($category->sub_category as $subCategory)
+                                    <li><a class="dropdown-item nav-link" href="#">{{ $subCategory->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </li>
-
-
+                        @endforeach
+                    @endif
                 </ul>
             </div>
             <div class="right-nav py-0">
@@ -252,110 +216,25 @@
                 <h2>Categories</h2>
             </div>
             <div class="row pb-3">
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
+                @if( getCategories()->isNotEmpty() )
+                    @foreach( getCategories() as $category )
+                        <div class="col-lg-3">
+                            <div class="cat-card">
+                                <div class="left">
+                                    @if(!empty($category->image))
+                                        <img src="{{asset('uploads/category/thumb/'.$category->image)}}" alt="" class="img-fluid">
+                                    @endif
+                                </div>
+                                <div class="right">
+                                    <div class="cat-data">
+                                        <h2>{{ $category->name }}</h2>
+{{--                                        <p>100 Products</p>--}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="cat-card">
-                        <div class="left">
-                            <img src="{{ asset('front-assets/images/cat-1.jpg') }}" alt="" class="img-fluid">
-                        </div>
-                        <div class="right">
-                            <div class="cat-data">
-                                <h2>Mens</h2>
-                                <p>100 Products</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>

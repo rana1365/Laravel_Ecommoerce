@@ -62,7 +62,6 @@
                                     <td>{{ $subCategory->name }}</td>
                                     <td>{{ $subCategory->categoryName }}</td>
                                     <td>{{ $subCategory->slug }}</td>
-                                    <td>{{ $subCategory->show_home }}</td>
                                     <td>
                                         @if($subCategory->status == 1)
                                             <svg class="text-success-500 h-6 w-6 text-success" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true">
@@ -74,6 +73,7 @@
                                             </svg>
                                         @endif
                                     </td>
+                                    <td>{{ $subCategory->show_home }}</td>
                                     <td>
                                         <a href="{{ route('sub-categories.edit',$subCategory->id) }}">
                                             <svg class="filament-link-icon w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

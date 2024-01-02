@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="slug">Slug</label>
-                                    <input type="text" value="{{ $category->slug }}" readonly name="slug" id="slug" class="form-control" placeholder="Slug" />
+                                    <input type="text" value="{{ $category->slug }}" name="slug" id="slug" class="form-control" placeholder="Slug" />
                                     <p></p>
                                 </div>
                             </div>
@@ -66,10 +66,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="status">Appearance</label>
+                                    <label for="show_home">Appearance</label>
                                     <select name="show_home" id="show_home" class="form-control">
-                                        <option {{ ($category->showHome == 'Yes') ? 'selected' : '' }} value="1">Yes</option>
-                                        <option {{ ($category->showHome == 'No') ? 'selected' : '' }} value="0">No</option>
+                                        <option {{ ($category->show_home == 'Yes') ? 'selected' : '' }} value="Yes">Yes</option>
+                                        <option {{ ($category->show_home == 'No') ? 'selected' : '' }} value="No">No</option>
                                     </select>
                                 </div>
                             </div>

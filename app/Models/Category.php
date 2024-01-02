@@ -17,4 +17,10 @@ class Category extends Model
         'name' => 'required',
         'slug' => 'required|unique:categories',
     ];
+
+    public function sub_category()
+    {
+        /*** Ex: a single SubCategory can belong to multiple category ***/
+        return $this->hasMany(SubCategory::class);
+    }
 }
