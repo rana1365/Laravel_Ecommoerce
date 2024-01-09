@@ -138,7 +138,6 @@ class CategoryController extends Controller
             $category->save();
 
             $oldImage = $category->image;
-
             /*** Save Image Here ***/
 
             if (!empty($request->image_id)) {
@@ -146,28 +145,32 @@ class CategoryController extends Controller
                 $extArray = explode('.', $tempImage->name);
                 $ext = last($extArray);
 
-                $newImageName = $category->id.'-'. time().'.'.$ext;
-                $sPath = public_path().'/temp/'.$tempImage->name;
-                $dPath = public_path().'/uploads/category/'.$newImageName;
+                $newImageName = $category->id.'-'.time().'.'.$ext;
+                $sPath = public_path().'/temp/' . $tempImage->name;
+                $dPath = public_path().'/uploads/category/' . $newImageName;
+
                 File::copy($sPath, $dPath);
 
                 /*** Generating Thumbnail ***/
 
-                $dPath = public_path().'/uploads/category/'.$newImageName;
+                $dPath = public_path().'/uploads/category/' . $newImageName;
                 $img = Image::make($sPath);
                 //$img->resize(450, 600);
                 $img->fit(450, 600, function ($constraint) {
                     $constraint->upsize();
                 });
-
                 $img->save($dPath);
+
                 $category->image = $newImageName;
                 $category->save();
 
                 /*** Delete old image ***/
 
-                File::delete(public_path().'uploads/category/thumb/'.$oldImage);
-                File::delete(public_path().'uploads/category/'.$oldImage);
+                $thumbPath = public_path().'/uploads/category/thumb/'.$oldImage;
+                $imagePath = public_path().'/uploads/category/'.$oldImage;
+
+                File::delete($thumbPath);
+                File::delete($imagePath);
             }
 
             $request->session()->flash('success', 'Category Updated Successfully.!');
@@ -200,8 +203,8 @@ class CategoryController extends Controller
             ]);
         }
 
-        File::delete(public_path().'uploads/category/thumb/'.$category->image);
-        File::delete(public_path().'uploads/category/'.$category->image);
+        File::delete(public_path().'/uploads/category/thumb/'.$category->image);
+        File::delete(public_path().'/uploads/category/'.$category->image);
 
         $category->delete();
 

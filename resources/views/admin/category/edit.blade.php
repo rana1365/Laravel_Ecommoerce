@@ -51,7 +51,7 @@
                                 </div>
                                 @if(!empty($category->image))
                                     <div>
-                                        <img width="150px" src="{{ asset('uploads/category/thumb/'.$category->image) }}" alt="thumbnail" />
+                                        <img width="150px" src="{{ asset('/uploads/category/thumb/'.$category->image) }}" alt="thumbnail" />
                                     </div>
                                 @endif
                             </div>
@@ -104,6 +104,7 @@
                     $("button[type=submit]").prop('disabled', false);
                     if (response["status"] == true) {
                         /**** Redirect after creating a category ****/
+                        // console.log(response);
                         window.location.href = "{{ route('categories.index') }}";
 
                         // Successful response, clear any previous error messages
