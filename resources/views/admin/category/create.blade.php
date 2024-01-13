@@ -157,9 +157,8 @@
 
         /*** Dropzone Image Upload call ***/
 
+        Dropzone.autoDiscover = false;
         $(document).ready(function () {
-
-            Dropzone.autoDiscover = false;
             const dropzone = $("#image").dropzone({
                 init: function() {
                     this.on('addedfile', function(file) {

@@ -153,7 +153,7 @@ class CategoryController extends Controller
 
                 /*** Generating Thumbnail ***/
 
-                $dPath = public_path().'/uploads/category/' . $newImageName;
+                $dPath = public_path().'/uploads/category/thumb/' . $newImageName;
                 $img = Image::make($sPath);
                 //$img->resize(450, 600);
                 $img->fit(450, 600, function ($constraint) {
@@ -166,11 +166,11 @@ class CategoryController extends Controller
 
                 /*** Delete old image ***/
 
-                $thumbPath = public_path().'/uploads/category/thumb/'.$oldImage;
-                $imagePath = public_path().'/uploads/category/'.$oldImage;
+//                $thumbPath = public_path().'/uploads/category/thumb/'.$oldImage;
+//                $imagePath = public_path().'/uploads/category/'.$oldImage;
 
-                File::delete($thumbPath);
-                File::delete($imagePath);
+                File::delete(public_path().'/uploads/category/thumb/'.$oldImage);
+                File::delete(public_path().'/uploads/category/'.$oldImage);
             }
 
             $request->session()->flash('success', 'Category Updated Successfully.!');
