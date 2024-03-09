@@ -200,7 +200,7 @@
                                             <img class="card-img-top" src="{{asset('uploads/product/small/'.$productImage->image)}}" >
                                         @else
                                             <img class="card-img-top" src="{{ asset('admin-assets/img/default-150x150.png') }}" >
-                                        @endif
+                                    @endif
 
                                 </a>
                                 <a class="whishlist" href="222"><i class="far fa-heart"></i></a>

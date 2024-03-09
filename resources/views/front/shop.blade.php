@@ -24,84 +24,35 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="accordion accordion-flush" id="accordionExample">
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                            Electronics
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">Mobile</a>
-                                                <a href="" class="nav-item nav-link">Tablets</a>
-                                                <a href="" class="nav-item nav-link">Laptops</a>
-                                                <a href="" class="nav-item nav-link">Speakers</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>  
+                            @if($categories->isNotEmpty())
 
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                            Men's Fashion
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">Shirts</a>
-                                                <a href="" class="nav-item nav-link">Jeans</a>
-                                                <a href="" class="nav-item nav-link">Shoes</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>
-                                                <a href="" class="nav-item nav-link">Perfumes</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>                                                              
-                                </div> 
-                                
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                            Women's Fashion
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">T-Shirts</a>
-                                                <a href="" class="nav-item nav-link">Tops</a>
-                                                <a href="" class="nav-item nav-link">Jeans</a>
-                                                <a href="" class="nav-item nav-link">Shoes</a>
-                                                <a href="" class="nav-item nav-link">Watches</a>
-                                                <a href="" class="nav-item nav-link">Perfumes</a>                                            
-                                            </div>
-                                        </div>
-                                    </div>                                                              
-                                </div> 
+                                @foreach($categories  as $key => $category)
+                                        <div class="accordion-item">
+                                        @if($category->sub_category->isNotEmpty())
+                                            <h2 class="accordion-header" id="headingOne">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne-{{ $key }}" aria-expanded="false" aria-controls="collapseOne-{{ $key }}">
+                                                    {{ $category->name }}
+                                                </button>
+                                            </h2>
+                                            @else
+                                            <a href="#" class="nav-item nav-link">{{ $category->name }}</a>
+                                        @endif
+                                            @if($category->sub_category->isNotEmpty())
+                                            <div id="collapseOne-{{ $key }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" >
+                                                <div class="accordion-body">
+                                                    <div class="navbar-nav">
+                                                        @foreach($category->sub_category as $subCategory)
 
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                            Applicances
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
-                                        <div class="accordion-body">
-                                            <div class="navbar-nav">
-                                                <a href="" class="nav-item nav-link">TV</a>
-                                                <a href="" class="nav-item nav-link">Washing Machines</a>
-                                                <a href="" class="nav-item nav-link">Air Conditioners</a>
-                                                <a href="" class="nav-item nav-link">Vacuum Cleaner</a>
-                                                <a href="" class="nav-item nav-link">Fans</a>
-                                                <a href="" class="nav-item nav-link">Air Coolers</a>                                            
+                                                        <a href="" class="nav-item nav-link">{{ $subCategory->name }}</a>
+                                                        
+                                                        @endforeach                                           
+                                                    </div>
+                                                </div>
                                             </div>
+                                            @endif
                                         </div>
-                                    </div>                                                              
-                                </div>                 
-                                                    
+                                    @endforeach
+                                @endif                 
                             </div>
                         </div>
                     </div>
@@ -112,30 +63,15 @@
                     
                     <div class="card">
                         <div class="card-body">
+                            @if($brands->isNotEmpty())
+                            @foreach($brands as $brand)
                             <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Canon
+                                <input class="form-check-input" type="checkbox" name="brand[]" value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
+                                    {{ $brand->name }}
                                 </label>
                             </div>
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Sony
-                                </label>
-                            </div>                 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Oppo
-                                </label>
-                            </div> 
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                <label class="form-check-label" for="flexCheckChecked">
-                                    Vivo
-                                </label>
-                            </div>                 
+                            @endforeach
+                            @endif                 
                         </div>
                     </div>
 
@@ -189,10 +125,27 @@
                             </div>
                         </div>
 
+                        @if($products->isNotEmpty())
+                        @foreach($products as $product)
+
+                        @php
+                            $productImage = $product->product_images->first();
+                        @endphp
+
                         <div class="col-md-4">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
+                                    <!-- <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a> -->
+                                    <a href="#" class="product-img">
+                                        @if(!empty($productImage->image))
+
+                                                <img class="card-img-top" src="{{asset('uploads/product/small/'.$productImage->image)}}" >
+                                            @else
+                                                <img class="card-img-top" src="{{ asset('admin-assets/img/default-150x150.png') }}" >
+                                        @endif
+                                
+                                    </a>
+
                                     <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
 
                                     <div class="product-action">
@@ -202,188 +155,19 @@
                                     </div>
                                 </div>                        
                                 <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
+                                    <a class="h6 link" href="product.php">{{ $product->title }}</a>
                                     <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
+                                        <span class="h5"><strong>${{ $product->price }}</strong></span>
+                                        @if($product->compare_price > 0)
+                                        <span class="h6 text-underline"><del>${{ $product->compare_price }}</del></span>
+                                        @endif
                                     </div>
                                 </div>                        
                             </div>                                               
                         </div>  
-                        
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
-
-                        <div class="col-md-4">
-                            <div class="card product-card">
-                                <div class="product-image position-relative">
-                                    <a href="" class="product-img"><img class="card-img-top" src="images/product-1.jpg" alt=""></a>
-                                    <a class="whishlist" href="222"><i class="far fa-heart"></i></a>                            
-
-                                    <div class="product-action">
-                                        <a class="btn btn-dark" href="#">
-                                            <i class="fa fa-shopping-cart"></i> Add To Cart
-                                        </a>                            
-                                    </div>
-                                </div>                        
-                                <div class="card-body text-center mt-3">
-                                    <a class="h6 link" href="product.php">Dummy Product Title</a>
-                                    <div class="price mt-2">
-                                        <span class="h5"><strong>$100</strong></span>
-                                        <span class="h6 text-underline"><del>$120</del></span>
-                                    </div>
-                                </div>                        
-                            </div>                                               
-                        </div>  
+                        @endforeach
+                        @endif
+                          
 
                         <div class="col-md-12 pt-5">
                             <nav aria-label="Page navigation example">
