@@ -35,7 +35,7 @@
                                                 </button>
                                             </h2>
                                             @else
-                                            <a href="#" class="nav-item nav-link">{{ $category->name }}</a>
+                                            <a href="{{ route("front.shop", $category->slug) }}" class="nav-item nav-link">{{ $category->name }}</a>
                                         @endif
                                             @if($category->sub_category->isNotEmpty())
                                             <div id="collapseOne-{{ $key }}" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" >
@@ -43,7 +43,7 @@
                                                     <div class="navbar-nav">
                                                         @foreach($category->sub_category as $subCategory)
 
-                                                        <a href="" class="nav-item nav-link">{{ $subCategory->name }}</a>
+                                                        <a href="{{ route("front.shop", [$category->slug, $subCategory->slug]) }}" class="nav-item nav-link">{{ $subCategory->name }}</a>
                                                         
                                                         @endforeach                                           
                                                     </div>
