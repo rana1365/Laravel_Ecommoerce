@@ -14,24 +14,27 @@ class ShopController extends Controller
     {
         $categorySelected = '';
         $subCategorySelected = '';
+        $brandsArray = [];
+        if(!empty($request->get('brand'))) {
+            $brandsArray = explode(',', $request->get('brand'));
+        }
+        
 
         $categories = Category::orderBy('name', 'ASC')->with('sub_category')->where('status', 1)->get();
         $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
 
         $products = Product::where('status', 1);
         // Applying Filters Here
-        if( !empty($categorySlug) ) {
+        if( !empty($categorySlug)) {
             $category = Category::where('slug', $categorySlug)->first();
             $products = $products->where('category_id', $category->id);
-            $categorySelected = $category;
+            $categorySelected = $category->id;
         }
 
-        
-
-        if( !empty($subCategorySlug) ) {
+        if( !empty($subCategorySlug)) {
             $subCategory = SubCategory::where('slug', $subCategorySlug)->first();
             $products = $products->where('sub_category_id', $subCategory->id);
-            $subCategorySelected = $subCategory;
+            $subCategorySelected = $subCategory->id;
         }
 
 
@@ -43,6 +46,7 @@ class ShopController extends Controller
         $data['products'] = $products;
         $data['categorySelected'] = $categorySelected;
         $data['subCategorySelected'] = $subCategorySelected;
+        $data['brandsArray'] = $brandsArray;
 
         
         return view('front.shop', $data);

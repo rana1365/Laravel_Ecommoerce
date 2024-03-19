@@ -193,6 +193,9 @@
         }
     }
 </script>
+
+@yield('customJs')
+
 </body>
 </html>
 
