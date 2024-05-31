@@ -66,7 +66,8 @@
                             @if($brands->isNotEmpty())
                             @foreach($brands as $brand)
                             <div class="form-check mb-2">
-                                <input {{(in_array($brand->id, $brandsArray)) ? 'checked' : '' }} class="form-check-input brand-label" type="checkbox" name="brand[]" value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
+                                <input {{(in_array($brand->id, $brandsArray)) ? 'checked' : '' }} class="form-check-input brand-label"
+                                 type="checkbox" name="brand[]" value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
                                 <label class="form-check-label" for="brand-{{ $brand->id }}">
                                     {{ $brand->name }}
                                 </label>
@@ -206,18 +207,17 @@
     var brands = [];
 
     $(".brand-label:checked").each(function() {
-        brands.push($(this).val());
+
+        if ($(this).is(":checked") == true) {
+
+            brands.push($(this).val());
+
+        }
     });
 
     console.log(brands.toString());
-
-    var url = '{{ url()->current() }}';
-
-    if (brands.length > 0) {
-        url += '?brand=' + brands.join('&brand=');
-    }
-
-    window.location.href = url;
+     var url = '{{ url()->current() }}?';
+     window.location.href = url+'&brand='+brands.toString();
 }
 
 

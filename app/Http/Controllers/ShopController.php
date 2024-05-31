@@ -15,10 +15,6 @@ class ShopController extends Controller
         $categorySelected = '';
         $subCategorySelected = '';
         $brandsArray = [];
-        if(!empty($request->get('brand'))) {
-            $brandsArray = explode(',', $request->get('brand'));
-        }
-        
 
         $categories = Category::orderBy('name', 'ASC')->with('sub_category')->where('status', 1)->get();
         $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
@@ -37,7 +33,10 @@ class ShopController extends Controller
             $subCategorySelected = $subCategory->id;
         }
 
-
+        if(!empty($request->get('brand'))) {
+            $brandsArray = explode(',', $request->get('brand'));
+            $products = $products->whereIn('brand_id', $brandsArray);
+        }
         $products = $products->orderBy('id', 'DESC');
         $products = $products->get();
 
