@@ -140,7 +140,7 @@
                         <div class="col-md-3">
                             <div class="card product-card">
                                 <div class="product-image position-relative">
-                                    <a href="" class="product-img">
+                                    <a href="{{ route('front.product', $products->slug) }}" class="product-img">
 
                                         @if(!empty($productImage->image))
 
@@ -161,9 +161,9 @@
                                 <div class="card-body text-center mt-3">
                                     <a class="h6 link" href="product.php">{{ $products->title }}</a>
                                     <div class="price mt-2">
-                                        <span class="h5"><strong>{{ $products->price }}</strong></span>
+                                        <span class="h5"><strong>${{ $products->price }}</strong></span>
                                         @if($products->compare_price > 0)
-                                        <span class="h6 text-underline"><del>{{ $products->compare_price }}</del></span>
+                                        <span class="h6 text-underline">$<del>{{ $products->compare_price }}</del></span>
                                         @endif
                                     </div>
                                 </div>
@@ -191,7 +191,7 @@
                         <div class="col-md-3">
                         <div class="card product-card">
                             <div class="product-image position-relative">
-                                <a href="" class="product-img">
+                                <a href="{{ route('front.product', $latestProduct->slug) }}" class="product-img">
 
                                     <!-- <img class="card-img-top" src="{{ asset('front-assets/images/product-2.jpg') }}" alt=""> -->
 
@@ -214,9 +214,9 @@
                             <div class="card-body text-center mt-3">
                                 <a class="h6 link" href="product.php">{{ $latestProduct->title }}</a>
                                 <div class="price mt-2">
-                                    <span class="h5"><strong>{{ $latestProduct->price }}</strong></span>
+                                    <span class="h5"><strong>${{ $latestProduct->price }}</strong></span>
                                     @if($latestProduct->compare_price > 0)
-                                        <span class="h6 text-underline"><del>{{ $latestProduct->compare_price }}</del></span>
+                                        <span class="h6 text-underline">$<del>{{ $latestProduct->compare_price }}</del></span>
                                         @endif
                                 </div>
                             </div>

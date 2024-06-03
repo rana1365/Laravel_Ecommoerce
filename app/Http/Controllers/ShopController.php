@@ -27,7 +27,7 @@ class ShopController extends Controller
             $categorySelected = $category->id;
         }
 
-        if( !empty($subCategorySlug)) {
+        if(!empty($subCategorySlug)) {
             $subCategory = SubCategory::where('slug', $subCategorySlug)->first();
             $products = $products->where('sub_category_id', $subCategory->id);
             $subCategorySelected = $subCategory->id;
@@ -63,7 +63,7 @@ class ShopController extends Controller
             $products = $products->orderBy('price', 'DESC');
         }
 
-        $products = $products->get();
+        $products = $products->paginate(6);
 
         $data['categories'] = $categories;
         $data['brands'] = $brands;
@@ -77,6 +77,18 @@ class ShopController extends Controller
 
         
         return view('front.shop', $data);
+
+    }
+
+    public function product ($slug) {
+        $product = Product::where('slug', $slug)->with('product_images')->first();
+
+        if($product == null) {
+            abort(404);
+        }
+
+        $data['product'] = $product;
+        return view('front.product', $data);
 
     }
 }
