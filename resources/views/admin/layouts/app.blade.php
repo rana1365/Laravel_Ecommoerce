@@ -64,7 +64,15 @@
 
     $(document).ready(function() {
         $('#summernote').summernote({
-            height: 250
+            height: 300
+        });
+
+        $('#summernote2').summernote({
+            height: 150
+        });
+
+        $('#summernote3').summernote({
+            height: 150
         });
     });
 

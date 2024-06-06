@@ -10,6 +10,7 @@ use App\Models\ProductImage;
 use App\Models\SubCategory;
 use App\Models\TempImage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
@@ -83,6 +84,8 @@ class ProductController extends Controller
             $product->sub_category_id = $request->sub_category;
             $product->brand_id = $request->brand;
             $product->is_featured = $request->is_featured;
+            $product->short_description = $request->short_description;
+            $product->shipping_returns = $request->shipping_returns;
             $product->save();
 
             /*** Saving Product Gallery Images ***/
@@ -211,6 +214,8 @@ class ProductController extends Controller
             $products->sub_category_id = $request->sub_category;
             $products->brand_id = $request->brand;
             $products->is_featured = $request->is_featured;
+            $products->short_description = $request->short_description;
+            $products->shipping_returns = $request->shipping_returns;
             $products->save();
 
 

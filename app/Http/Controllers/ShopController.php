@@ -49,7 +49,7 @@ class ShopController extends Controller
             
         }
 
-        
+        // Applying Sorting Here
         if ($request->get('sort') != '') {
             if ($request->get('sort') == 'latest') {
                 $products = $products->orderBy('id', 'DESC');

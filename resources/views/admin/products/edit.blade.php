@@ -41,6 +41,13 @@
                                             <p class="error"></p>
                                         </div>
                                     </div>
+                                    <div class="col-md-12" >
+                                        <div class="mb-3">
+                                            <label for="short_description">Short Description</label>
+                                            <textarea name="short_description" id="summernote2" cols="20"
+                                                      rows="5" class="summernote" >{{ $products->short_description }}</textarea>
+                                        </div>
+                                    </div>
 
                                     <div class="col-md-12" >
                                         <div class="mb-3">
@@ -49,6 +56,15 @@
                                                       rows="10" class="summernote" >{{ $products->description }}</textarea>
                                         </div>
                                     </div>
+
+                                    <div class="col-md-12" >
+                                        <div class="mb-3">
+                                            <label for="shipping_returns">Shipping and Returns</label>
+                                            <textarea name="shipping_returns" id="summernote3" cols="20"
+                                                      rows="5" class="summernote" >{{ $products->shipping_returns }}</textarea>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
