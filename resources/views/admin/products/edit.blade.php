@@ -86,7 +86,7 @@
                                             <input type="hidden" name="image_array[]" value="{{ $image->id }}">
                                             <img src="{{ asset('/uploads/product/small/'.$image->image) }}" class="card-img-top" alt="...">
                                             <div class="card-body">
-                                                <a href="javascript:void(0)" onclick="deleteImage({{ $image->id }})" class="btn btn-danger">Delete</a>
+                                                <a href="javascript:void(0)" onclick="deleteImage({ $image->id })" class="btn btn-danger">Delete</a>
                                             </div>
                                         </div></div>
                                 @endforeach
@@ -155,6 +155,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h2 class="h4 mb-3">Related Product</h2>
+                                <div class="mb-3">
+                                    <select multiple class="related-product w-100" name = "related_products[]" id="related_products" >
+                                        @if (!empty($relatedProducts))
+                                        @foreach ($relatedProducts as $relProduct)
+                                        <option selected value="{{ $relProduct->id }}" >{{ $relProduct->title }}</option>
+                                        @endforeach
+                                       @endif
+                                    </select>
+                                    <p class="error"></p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
                         <div class="card mb-3">
@@ -249,6 +265,21 @@
 @section('CustomJs')
 
     <script>
+        /****** Related Products backend js code for edit file ********/
+        $('.related-product').select2({
+            ajax: {
+                url: '{{ route("products.getProducts") }}',
+                dataType: 'json',
+                tags: true,
+                multiple: true,
+                minimumInputLength: 3,
+                processResults: function (data) {
+                    return {
+                        results: data.tags
+                    };
+                }
+            }
+        });
 
         /******Slug auto fill ajax call ********/
         $("#title").change(function () {
