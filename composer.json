@@ -9,6 +9,7 @@
         "ext-gd": "*",
         "doctrine/dbal": "^3.7",
         "guzzlehttp/guzzle": "^7.2",
+        "hardevine/shoppingcart": "^3.3",
         "intervention/image": "^2.7",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",

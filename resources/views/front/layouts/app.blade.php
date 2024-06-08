@@ -44,6 +44,8 @@
 
     <!-- Fav Icon -->
     <link rel="shortcut icon" type="image/x-icon" href="#" />
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body data-instant-intensity="mousedown">
 
@@ -182,6 +184,13 @@
 <script src="{{ asset('front-assets/js/ion.rangeSlider.min.js') }}"></script>
 <script src="{{ asset('front-assets/js/custom.js') }}"></script>
 <script>
+
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
     window.onscroll = function() {myFunction()};
 
     var navbar = document.getElementById("navbar");
@@ -193,6 +202,25 @@
         } else {
             navbar.classList.remove("sticky");
         }
+    }
+
+    /*** Add to Cart ajax function ***/
+    function addToCart(id) {
+        $.ajax({
+
+            url: '{{ route("front.addToCart") }}',
+            type: 'post',
+            data: {id:id},
+            dataType: 'json',
+            success:function(response) {
+                
+                if (response.status == true) {
+                    window.location.href = "{{ route('front.cart') }}";
+                } else {
+                    alert(response.message);
+                }
+            }
+        });
     }
 </script>
 

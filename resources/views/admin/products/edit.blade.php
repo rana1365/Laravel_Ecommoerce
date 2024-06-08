@@ -86,7 +86,7 @@
                                             <input type="hidden" name="image_array[]" value="{{ $image->id }}">
                                             <img src="{{ asset('/uploads/product/small/'.$image->image) }}" class="card-img-top" alt="...">
                                             <div class="card-body">
-                                                <a href="javascript:void(0)" onclick="deleteImage({ $image->id })" class="btn btn-danger">Delete</a>
+                                                <a href="javascript:void(0)" onclick="deleteImage(`{{ $image->id }}`)" class="btn btn-danger">Delete</a>
                                             </div>
                                         </div></div>
                                 @endforeach
