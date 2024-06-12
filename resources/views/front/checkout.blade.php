@@ -45,8 +45,11 @@
                                     <div class="mb-3">
                                         <select name="country" id="country" class="form-control">
                                             <option value="">Select a Country</option>
-                                            <option value="1">India</option>
-                                            <option value="2">UK</option>
+                                            @if ($countries->isNotEmpty())
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country->id}}">{{ $country->name}}</option>
+                                                @endforeach
+                                            @endif
                                         </select>
                                     </div>            
                                 </div>
@@ -127,9 +130,18 @@
                         </div>
                     </div>   
                     
-                    <div class="card payment-form ">                        
-                        <h3 class="card-title h5 mb-3">Payment Details</h3>
-                        <div class="card-body p-0">
+                    <div class="card payment-form ">
+                        <h3 class="card-title h5 mb-3">Payment Method</h3>
+                        <div>
+                            <input checked type="radio" name="payment_method" id="payment_method_one" value="cod">
+                            <label for="payment_method_one" class="form-check-label">COD</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="payment_method" id="payment_method_two" value="cod">
+                            <label for="payment_method_two" class="form-check-label">Stripe</label>
+                        </div>
+                                            
+                        <div class="card-body p-0 d-none mt-3" id="card-payment-form" >
                             <div class="mb-3">
                                 <label for="card_number" class="mb-2">Card Number</label>
                                 <input type="text" name="card_number" id="card_number" placeholder="Valid Card Number" class="form-control">
@@ -144,10 +156,10 @@
                                     <input type="text" name="expiry_date" id="expiry_date" placeholder="123" class="form-control">
                                 </div>
                             </div>
-                            <div class="pt-4">
+                        </div>
+                        <div class="pt-4">
                                 <a href="#" class="btn-dark btn btn-block w-100">Pay Now</a>
-                            </div>
-                        </div>                        
+                            </div>                        
                     </div>
 
                           
@@ -157,4 +169,22 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('customJs')
+    <script>
+
+        $("#payment_method_one").click(function(){
+            if ($(this).is(":checked") == true) {
+                $("#card-payment-form").addClass('d-none');
+            }
+        });
+
+        $("#payment_method_two").click(function(){
+            if ($(this).is(":checked") == true) {
+                $("#card-payment-form").removeClass('d-none');
+            }
+        });
+
+    </script>
 @endsection
