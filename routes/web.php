@@ -46,6 +46,8 @@ Route::post('/update-cart', [CartController::class, 'updateCart'])->name('front.
 
 Route::post('/delete-item', [CartController::class, 'deleteItem'])->name('front.deleteItem.cart');
 
+Route::get('/checkout', [CartController::class, 'checkout'])->name('front.checkout');
+
 /*** Route Group For Registered User ***/
 Route::group(['prefix' => 'account'], function () {
 
