@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\CustomerAddress;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -175,6 +178,86 @@ class CartController extends Controller
         return view('front.checkout', [
             'countries' => $countries
         ]);
+    }
+
+    public function processCheckout (Request $request) {
+        
+        $validator = Validator::make($request->all(), [
+
+            'first_name' => 'required|min:5',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'country' => 'required',
+            'address' => 'required|min:30',
+            'city' => 'required',
+            'state' => 'required',
+            'zip' => 'required',
+            'mobile' => 'required'
+            
+        ]);
+
+        /* Step-01: Apply Validation  */
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Please fix the error',
+                'status' => false,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        /* Step-02: Save user address to database  */
+
+        $user = Auth::user();
+        CustomerAddress::updateOrCreate(
+            ['user_id' => $user->id],
+
+            [
+                'user_id' => $user->id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'mobile' => $request->mobile,
+                'country_id' => $request->country,
+                'apartment' => $request->apartment,
+                'address' => $request->address,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip' => $request->zip,
+                
+            ]);
+
+            /*  Step-03: Store data in order Table */
+
+            if ($request->payment_method == 'cod') {
+                
+                $shipping = 0;
+                $discount = 0;
+                $subTotal = Cart::subtotal(2,'.','');
+                $grandTotal = $shipping + $subTotal;
+
+                $order = new Order;
+                $order->subtotal = $subTotal;
+                $order->grand_total = $grandTotal;
+                $order->user_id = $user->id;
+                $order->first_name = $request->first_name;
+                $order->last_name = $request->last_name;
+                $order->email = $request->email;
+                $order->mobile = $request->mobile;
+                $order->address = $request->address;
+                $order->apartment = $request->apartment;
+                $order->state = $request->state;
+                $order->city = $request->city;
+                $order->zip = $request->zip;
+                $order->notes = $request->notes;
+                $order->country_id = $request->country;
+                $order->save();
+
+            } else {
+                //
+            }
+
+
     }
 
 }
