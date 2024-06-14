@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Models\CustomerAddress;
 use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -171,17 +172,21 @@ class CartController extends Controller
             return redirect()->route('account.login');
         }
 
+        $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
+
         session()->forget('url.intended');
 
         $countries = Country::orderBy('name', 'ASC')->get();
 
         return view('front.checkout', [
-            'countries' => $countries
+            'countries' => $countries,
+            'customerAddress' => $customerAddress
         ]);
     }
 
     public function processCheckout (Request $request) {
         
+        /* Step-01: Apply Validation  */
         $validator = Validator::make($request->all(), [
 
             'first_name' => 'required|min:5',
@@ -196,8 +201,6 @@ class CartController extends Controller
             
         ]);
 
-        /* Step-01: Apply Validation  */
-
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Please fix the error',
@@ -206,7 +209,7 @@ class CartController extends Controller
             ]);
         }
 
-        /* Step-02: Save user address to database  */
+        /* Step-02: Save user address to customer_addresses table  */
 
         $user = Auth::user();
         CustomerAddress::updateOrCreate(
@@ -249,15 +252,45 @@ class CartController extends Controller
                 $order->state = $request->state;
                 $order->city = $request->city;
                 $order->zip = $request->zip;
-                $order->notes = $request->notes;
+                $order->notes = $request->order_notes;
                 $order->country_id = $request->country;
+
                 $order->save();
+
+                /* Step-04: Store oreder items in order_items table  */
+
+                foreach (Cart::content() as $item) {
+                    $orderItem = new OrderItem;
+                    $orderItem->product_id = $item->id;
+                    $orderItem->order_id = $order->id;
+                    $orderItem->name = $item->name;
+                    $orderItem->qty = $item->qty;
+                    $orderItem->price = $item->price;
+                    $orderItem->total = $item->price*$item->qty;
+
+                    $orderItem->save();
+                }
+
+                session()->flash('success', 'You have successfully placed your order.');
+
+                Cart::destroy();
+
+                return response()->json([
+                    'message' => 'Order saved successfully',
+                    'orderId' => $order->id,
+                    'status' => true
+                ]);
+                
 
             } else {
                 //
             }
 
 
+    }
+
+    public function thankyou () {
+       return view('front.thankyou'); 
     }
 
 }
