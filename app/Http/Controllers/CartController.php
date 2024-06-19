@@ -289,8 +289,10 @@ class CartController extends Controller
 
     }
 
-    public function thankyou () {
-       return view('front.thankyou'); 
+    public function thankyou ($id) {
+       return view('front.thanks',[
+        'id' => $id
+       ]); 
     }
 
 }

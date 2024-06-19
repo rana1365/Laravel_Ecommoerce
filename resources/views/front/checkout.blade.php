@@ -216,13 +216,13 @@
             type: 'post',
             data: $(this).serializeArray(),
             dataType: 'json',
-            success: function(resposne) {
+            success: function(response) {
 
-                var errors = resposne.errors;
+                var errors = response.errors;
 
                 $('button[type="submit"]').prop('disabled', false);
 
-                if (resposne.status == false) {
+                if (response.status == false) {
                     
                     if (errors.first_name) {
                     $("#first_name").addClass('is-invalid')
