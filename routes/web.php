@@ -53,6 +53,8 @@ Route::post('/process-checkout', [CartController::class, 'processCheckout'])->na
 
 Route::get('/thanks/{orderId}', [CartController::class, 'thankyou'])->name('front.thankyou');
 
+Route::post('/get-order-summery', [CartController::class, 'getOrderSummery'])->name('front.getOrderSummery');
+
 /*** Route Group For Registered User ***/
 Route::group(['prefix' => 'account'], function () {
 
