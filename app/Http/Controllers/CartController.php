@@ -255,11 +255,10 @@ class CartController extends Controller
             /*  Step-03: Store data in orders Table */
 
             if ($request->payment_method == 'cod') {
-                
+
                 $shipping = 0;
                 $discount = 0;
                 $subTotal = Cart::subtotal(2,'.','');
-                $grandTotal = $shipping + $subTotal;
 
                 /* Calculating Shipping Here */
                 $shippingInfo = ShippingCharge::where('country_id', $request->country)->first();
