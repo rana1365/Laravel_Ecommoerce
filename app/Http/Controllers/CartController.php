@@ -181,21 +181,26 @@ class CartController extends Controller
 
         /* Start Calculating Shipping Charge Here */
 
-        $userCountry = $customerAddress->country_id;
-        $shippingInfo = ShippingCharge::where('country_id', $userCountry)->first();
+        if ($customerAddress != '') {
 
-        //echo '<p>' .$shippingInfo->amount.'</p>';
-        $totalQty = 0;
-        $totalShippingCharge = 0;
-        $grandTotal = 0;
-        foreach (Cart::content() as $item) {
-            $totalQty += $item->qty;
+            $userCountry = $customerAddress->country_id;
+            $shippingInfo = ShippingCharge::where('country_id', $userCountry)->first();
+
+            //echo '<p>' .$shippingInfo->amount.'</p>';
+            $totalQty = 0;
+            $totalShippingCharge = 0;
+            $grandTotal = 0;
+            foreach (Cart::content() as $item) {
+                $totalQty += $item->qty;
+            }
+
+            $totalShippingCharge = $totalQty*$shippingInfo->amount;
+
+            $grandTotal = Cart::subtotal(2,'.','')+$totalShippingCharge;
+        } else {
+            $grandTotal = Cart::subtotal(2,'.','');
+            $totalShippingCharge = 0;
         }
-
-        $totalShippingCharge = $totalQty*$shippingInfo->amount;
-
-        $grandTotal = Cart::subtotal(2,'.','')+$totalShippingCharge;
-
         /* End Calculating Shipping Charge Here */
 
         return view('front.checkout', [
@@ -270,14 +275,14 @@ class CartController extends Controller
                 }
 
                 if ($shippingInfo != null) {
-                    $shippingCharge = $totalQty*$shippingInfo->amount;
-                    $grandTotal = $subTotal+$shippingCharge;
+                    $shipping = $totalQty*$shippingInfo->amount;
+                    $grandTotal = $subTotal+$shipping;
                     
     
                 } else {
                     $shippingInfo = ShippingCharge::where('country_id', 'rest_of_world')->first();
-                    $shippingCharge = $totalQty*$shippingInfo->amount;
-                    $grandTotal = $subTotal+$shippingCharge;
+                    $shipping = $totalQty*$shippingInfo->amount;
+                    $grandTotal = $subTotal+$shipping;
                 }
 
                 $order = new Order;
