@@ -46,7 +46,7 @@ return new class extends Migration
             /* Set minimum amount to discount based on type */
 
             $table->double( 'min_amount', 10, 2 )->nullable();
-
+            
             /* Checking the status */
 
             $table->integer( 'status' )->default(1);
