@@ -102,7 +102,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="starts_at">Starts At</label>
-                                <input type="text" name="starts_at" id="starts_at" class="form-control" placeholder="Starts At" />
+                                <input type="date" name="starts_at" id="starts_at" class="form-control" placeholder="Starts At" />
                                 <p></p>
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="expires_at">Expires At</label>
-                                <input type="text" name="expires_at" id="expires_at" class="form-control" placeholder="Expires At" />
+                                <input type="date" name="expires_at" id="expires_at" class="form-control" placeholder="Expires At" />
                                 <p></p>
                             </div>
                         </div>
@@ -131,10 +131,10 @@
 
 @section('customJs')
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function(){
 
-            $('#starts_at').datetimepicker({
+            $("#starts_at").datetimepicker({
                 // options here
                 format:'Y-m-d H:i:s',
             });
